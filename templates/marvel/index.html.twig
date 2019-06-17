@@ -1,39 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}Marvel Character list{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Video games {% endtrans %}{% endblock %}
 
 {% block body %}
 
 <!-- Page title-->
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">{% trans %}Marvel Character List {% endtrans %}</h1>
-    <p class="lead">{% trans %}Welcom to this list of Marvel characters{% endtrans %} </p>
+    <h1 class="display-4">{% trans %}Video games List {% endtrans %}</h1>
+    <p class="lead">{% trans %}Welcom to this list of video games{% endtrans %} </p>
   </div>
 </div>
 
 <!-- Paginator links -->
-{% include "paginator.html.twig" %}
+{% include "paginator.html.twig" with {'current': nb_page} %}
 
 <!-- Display 20 characters -->
 <div class="card-group">
-{% for i in 0..19 %}
-<div class=" col-md-4 mb-4">
-  <div class="card rounded shadow ">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body ">
-      <h5 class="card-title">Card title {{ i }}</h5>
-      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+{% for object in objects %}
+<div class="col-md-3 mb-4 row-eq-height">
 
-       <a href="" id="myModal" class="nav-link" data-remote="{{ url('detailView', {'id': i}) }}" data-toggle="modal" data-target="#theModal">Modal</a>
+  <div class="card rounded shadow h-100">
+    <!-- showing a picture -->
+    {% if object.artworks is defined %}
+      {% for art in  object.artworks %}
+        {% if loop.first %}
+          <img src="http://{{ art.url|replace({'thumb': 'thumb_2x'}) }}" class="card-img-top" onerror="this.src='https://www.lg.com/ma/content/img/support/img-dummy-product.jpg';" alt="...">
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      {% for screen in  object.screenshots %}
+        {% if loop.first %}
+          <img src="http://{{ screen.url|replace({'thumb': 'thumb_2x'}) }}" class="card-img-top" onerror="this.src='https://www.lg.com/ma/content/img/support/img-dummy-product.jpg';" alt="...">
+        {% endif %}          
+      {% endfor %}
+    {% endif %} 
+    <div class="card-body h-auto">
+      <h5 class="card-title">{{ object.name }} </h5>
+      <p class="card-text">
+      {% if object.storyline is defined %}
+        {{ object.storyline|slice(0,100) }}
+      {% elseif object.summary is defined %}
+        {{ object.summary|slice(0,100) }}
+      {% endif %}
+      </p>
+      <small class="text-muted">
+      {% if object.genres is defined %}
+        {% for genre in object.genres %}
+          #{{ genre.name }} 
+        {% endfor %}
+      {% endif %}   
+      </small>
+     
     </div>
+    <div class="card-footer">
+    {{ object.id  }}
+       <a href="" id="myModal" class="nav-link text-right" data-remote="{{ url('detailView', {'id': object.id }) }}" data-toggle="modal" data-target="#theModal">{% trans %}See more {% endtrans %} </a>
+    </div>
+  
   </div>
+
 </div>
 {% endfor %}
 </div>
 <!-- Modal for showing detail -->
 <div class="modal fade" id="theModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">My modal</h5>
@@ -42,8 +74,7 @@
                 </button>
             </div>
            <div class="modal-body">
-                ... remote content from "data-remote" loads here ...
-                
+                               
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -53,7 +84,7 @@
     </div>
 </div>
 <!-- Paginator links -->
-{% include "paginator.html.twig" %}
+{% include "paginator.html.twig" with {'current': nb_page} %}
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
@@ -64,6 +95,9 @@ $(document).ready(function(){
   $('a#myModal').on('click', function (e) {
     link = e.currentTarget
     $($(link).data("target")+' .modal-content').load($(this).data("remote"))  
+    $('#myCarousel').on('slide.bs.carousel', function () {
+  // do something…
+})
   })
 })
 </script>
