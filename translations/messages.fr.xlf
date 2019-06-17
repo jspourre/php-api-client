@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="FAWmPop" resname="Character">
+        <source>Character</source>
+        <target>Personnage</target>
+      </trans-unit>
+      <trans-unit id="xczwgvc" resname="Marvel Character list">
+        <source>Marvel Character list</source>
+        <target>List de personnage Marvel</target>
+      </trans-unit>
+      <trans-unit id="4v_2I77" resname="Marvel Character List">
+        <source>Marvel Character List</source>
+        <target>List de personnage Marvel</target>
+      </trans-unit>
+      <trans-unit id="MRGaTA4" resname="Welcom to this list of Marvel characters">
+        <source>Welcom to this list of Marvel characters</source>
+        <target>Bienvenue sur la liste des personnages de Marvel</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

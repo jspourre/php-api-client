@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Marvel Character list{% endtrans %}{% endblock %}
+
+{% block body %}
+
+<!-- Page title-->
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">{% trans %}Marvel Character List {% endtrans %}</h1>
+    <p class="lead">{% trans %}Welcom to this list of Marvel characters{% endtrans %} </p>
+  </div>
+</div>
+
+<!-- Paginator links -->
+{% include "paginator.html.twig" %}
+
+<!-- Display 20 characters -->
+<div class="card-group">
+{% for i in 0..19 %}
+<div class=" col-md-4 mb-4">
+  <div class="card rounded shadow ">
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body ">
+      <h5 class="card-title">Card title {{ i }}</h5>
+      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+       <a href="" id="myModal" class="nav-link" data-remote="{{ url('detailView', {'id': i}) }}" data-toggle="modal" data-target="#theModal">Modal</a>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+<!-- Modal for showing detail -->
+<div class="modal fade" id="theModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">My modal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+           <div class="modal-body">
+                ... remote content from "data-remote" loads here ...
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Paginator links -->
+{% include "paginator.html.twig" %}
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+$(document).ready(function(){
+  /*
+  *Script to load the contain of modal with ajax
+  */
+  $('a#myModal').on('click', function (e) {
+    link = e.currentTarget
+    $($(link).data("target")+' .modal-content').load($(this).data("remote"))  
+  })
+})
+</script>
+{% endblock %}
