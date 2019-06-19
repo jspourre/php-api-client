@@ -22,13 +22,15 @@
 
   <div class="card rounded shadow h-100">
     <!-- showing a picture -->
-    {% if object.artworks is defined %}
+    {% if object.cover is defined %}
+      <img src="http://{{ object.cover.url|replace({'thumb': 'thumb_2x'}) }}" class="card-img-top" onerror="this.src='https://www.lg.com/ma/content/img/support/img-dummy-product.jpg';" alt="...">
+    {% elseif object.artworks is defined %}
       {% for art in  object.artworks %}
         {% if loop.first %}
           <img src="http://{{ art.url|replace({'thumb': 'thumb_2x'}) }}" class="card-img-top" onerror="this.src='https://www.lg.com/ma/content/img/support/img-dummy-product.jpg';" alt="...">
         {% endif %}
       {% endfor %}
-    {% else %}
+    {% elseif object.screenshots is defined %}
       {% for screen in  object.screenshots %}
         {% if loop.first %}
           <img src="http://{{ screen.url|replace({'thumb': 'thumb_2x'}) }}" class="card-img-top" onerror="this.src='https://www.lg.com/ma/content/img/support/img-dummy-product.jpg';" alt="...">
@@ -54,7 +56,6 @@
      
     </div>
     <div class="card-footer">
-    {{ object.id  }}
        <a href="" id="myModal" class="nav-link text-right" data-remote="{{ url('detailView', {'id': object.id }) }}" data-toggle="modal" data-target="#theModal">{% trans %}See more {% endtrans %} </a>
     </div>
   
