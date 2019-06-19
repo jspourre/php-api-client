@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Error {% endtrans %}:{{ code }}{% endblock %}
+
+{% block body %}
+
+<!-- Page title-->
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">{% trans %}An error occured with API {% endtrans %}</h1>
+    <h1 class="display-5">{% trans %}An error occured with API {% endtrans %}</h1>
+    <p class="lead">{% trans %}Welcom to this list of video games{% endtrans %} </p>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+version: '3'
+services:
+    apache:
+        build: .docker/apache
+        container_name: sf4_apache
+        ports:
+          - 80:80
+        volumes:
+          - .docker/config/vhosts:/etc/apache2/sites-enabled
+          - .:/home/wwwroot/sf4
+        depends_on:
+          - php
+
+    php:
+        build: .docker/php
+        container_name: sf4_php
+        volumes:
+          - .:/home/wwwroot/sf4
